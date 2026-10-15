@@ -1,0 +1,104 @@
+{
+  "roles": {
+    "sde": {
+      "easy": [
+        "Explain the difference between an array and a linked list.",
+        "What is a hash map and how does it handle collisions?",
+        "What is the difference between a process and a thread?",
+        "What does Big-O notation tell you about an algorithm?"
+      ],
+      "medium": [
+        "How would you detect a cycle in a linked list, and what is the time and space complexity?",
+        "Explain how a database index works and when it can hurt performance.",
+        "What happens when you type a URL into a browser and press enter?",
+        "Design a URL shortener. What are the main components?"
+      ],
+      "hard": [
+        "Design a rate limiter for an API used by millions of users.",
+        "How would you find the median of a continuous stream of numbers?",
+        "How would you design a notification system that must never send the same message twice?",
+        "What are the trade-offs between SQL and NoSQL when designing a chat application?"
+      ]
+    },
+    "web": {
+      "easy": [
+        "What is the difference between let, const and var in JavaScript?",
+        "Explain the CSS box model.",
+        "What is the virtual DOM in React and why is it used?",
+        "What is the difference between GET and POST requests?"
+      ],
+      "medium": [
+        "Explain how closures work in JavaScript with an example.",
+        "How do you improve the performance of a React application?",
+        "What is CORS and how would you fix a CORS error?",
+        "What is the difference between server-side rendering and client-side rendering?"
+      ],
+      "hard": [
+        "How would you design authentication for an app that supports Google login and email login?",
+        "Explain the JavaScript event loop and how it handles async code.",
+        "How would you build a real-time chat feature from end to end?",
+        "How do you protect a web application against XSS and CSRF?"
+      ]
+    },
+    "data_analyst": {
+      "easy": [
+        "What is the difference between INNER JOIN and LEFT JOIN?",
+        "How do you handle missing values in a dataset?",
+        "When would you use the median instead of the mean?",
+        "What makes a data visualization good?"
+      ],
+      "medium": [
+        "How would you find the second highest salary in a table using SQL?",
+        "Daily active users dropped suddenly. How would you investigate?",
+        "Explain what a p-value means in simple language.",
+        "How do you detect and treat outliers?"
+      ],
+      "hard": [
+        "How would you design an A/B test for a new checkout page and decide the sample size?",
+        "Explain window functions in SQL and give a real use case.",
+        "How would you build a dashboard for a CEO who has five minutes a week?",
+        "How do you handle a dataset with severe class imbalance?"
+      ]
+    },
+    "data_scientist": {
+      "easy": [
+        "What is the difference between supervised and unsupervised learning?",
+        "Explain overfitting and one way to reduce it.",
+        "What is the bias-variance tradeoff?",
+        "What is cross-validation and why do we use it?"
+      ],
+      "medium": [
+        "How does a random forest work and why does it usually beat a single decision tree?",
+        "How do you choose between precision and recall for a given problem?",
+        "Explain L1 and L2 regularization.",
+        "How would you deal with high-dimensional data?"
+      ],
+      "hard": [
+        "Walk me through building a customer churn model from scratch.",
+        "Explain how gradient boosting works.",
+        "How would you monitor a deployed model for drift?",
+        "How would you explain a complex model's prediction to a non-technical stakeholder?"
+      ]
+    }
+  },
+  "behavioral": {
+    "easy": [
+      "Tell me about a project you are proud of and what your role was.",
+      "Why do you want this role?",
+      "What are your strengths, and what is one area you are improving?",
+      "How do you manage your time when several deadlines overlap?"
+    ],
+    "medium": [
+      "Describe a time you disagreed with a teammate. How did you handle it?",
+      "Tell me about a time you failed or made a mistake. What did you learn?",
+      "Describe a situation where you had to learn something new very quickly.",
+      "Tell me about a time you took initiative without being asked."
+    ],
+    "hard": [
+      "Describe a time you had to make a decision with incomplete information.",
+      "Tell me about a time you led a team through a difficult situation.",
+      "Describe the toughest feedback you have received and what you did with it.",
+      "How would you handle being asked to deliver something you knew was not feasible?"
+    ]
+  }
+}
