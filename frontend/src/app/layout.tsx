@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import type { ReactNode } from "react";
-
 import AuthProvider from "@/components/AuthProvider";
 import Navbar from "@/components/Navbar";
 import "./globals.css";

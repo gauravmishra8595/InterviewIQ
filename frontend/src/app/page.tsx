@@ -1,14 +1,10 @@
 import Link from "next/link";
-
-import Logo from "@/components/Logo";
 import VoiceOrb from "@/components/VoiceOrb";
-
 const PRACTISE = [
   { title: "Questions about you", text: "Upload your resume and the interviewer asks about your actual projects and skills, not a generic list." },
   { title: "Answer out loud", text: "Speak your answers the way you will in the room. Your voice is transcribed live, and you can edit before sending." },
   { title: "A scorecard that explains itself", text: "Every answer is scored on content, structure and delivery, with filler words, pace and one fix to try next time." },
 ];
-
 const STEPS = [
   ["Pick a role and level", "Software, web, data or HR. Easy, medium or hard."],
   ["Add your resume", "Optional, but it turns on project and skill questions."],
@@ -19,16 +15,6 @@ const STEPS = [
 export default function Home() {
   return (
     <>
-      <header className="border-b border-line/70">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <Logo />
-          <nav className="flex items-center gap-2">
-            <Link href="/login" className="btn btn-quiet">Log in</Link>
-            <Link href="/register" className="btn btn-primary">Start free</Link>
-          </nav>
-        </div>
-      </header>
-
       <main>
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
           <div>
@@ -57,7 +43,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         <section className="border-y border-line bg-white">
           <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-3">
             {PRACTISE.map((p) => (
@@ -81,7 +66,6 @@ export default function Home() {
             ))}
           </ol>
         </section>
-
         <section className="mx-auto max-w-6xl px-5 pb-24">
           <div className="rounded-[2rem] bg-violet p-10 text-white md:flex md:items-center md:justify-between">
             <div>
