@@ -2,9 +2,10 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { apiFetch } from "@/lib/api";
+import { wakeServer } from "@/lib/config";
 import GoogleButton from "./GoogleButton";
 import PasswordField from "./PasswordField";
 
@@ -13,6 +14,13 @@ export default function RegisterForm() {
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [slow, setSlow] = useState(false);
+  useEffect(() => { wakeServer(); }, []);
+  useEffect(() => {
+    if (!busy) { setSlow(false); return; }
+    const t = setTimeout(() => setSlow(true), 6000);
+    return () => clearTimeout(t);
+  }, [busy]);
   const set = (k: keyof typeof form) => (v: string) => setForm((f) => ({ ...f, [k]: v }));
 
   async function submit(e: FormEvent) {
@@ -25,7 +33,11 @@ export default function RegisterForm() {
         body: { name: form.name.trim(), email: form.email.trim(), password: form.password },
       });
       const res = await signIn("credentials", { email: form.email.trim(), password: form.password, redirect: false });
-      if (res?.error) throw new Error("Account created, but automatic login failed. Please log in.");
+      if (res?.error) {
+        // The account exists now, so send them to log in instead of showing an error.
+        router.push("/login?registered=1");
+        return;
+      }
       router.push("/setup");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not create the account.");
@@ -48,6 +60,7 @@ export default function RegisterForm() {
         </div>
         <PasswordField id="password" label="Password" value={form.password} onChange={set("password")} autoComplete="new-password" placeholder="At least 8 characters" />
         <PasswordField id="confirm" label="Confirm password" value={form.confirm} onChange={set("confirm")} autoComplete="new-password" />
+        {slow && !error && <p className="ok-box" role="status">The free server is waking up. This can take up to a minute, please wait.</p>}
         {error && <p className="error-box" role="alert">{error}</p>}
         <button className="btn btn-primary w-full" disabled={busy}>{busy ? "Creating account..." : "Create account"}</button>
       </form>

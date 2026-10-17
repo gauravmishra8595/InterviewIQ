@@ -3,7 +3,7 @@ import type { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+import {API_URL as API} from "./config";
 
 function expiryOf(jwt: string): number {
   try {
@@ -14,14 +14,18 @@ function expiryOf(jwt: string): number {
   }
 }
 
-async function post(path: string, body: unknown) {
-  const res = await fetch(`${API}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const data = await res.json().catch(() => ({}));
-  return { ok: res.ok, data };
+  async function post(path: string, body: unknown) {
+  try {
+    const res = await fetch(`${API}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, data };
+  } catch {
+    return { ok: false, data: { detail: "Cannot reach the server. Wait 30 seconds for it to wake up, then try again." } };
+  }
 }
 
 async function refreshAccess(token: JWT): Promise<JWT> {

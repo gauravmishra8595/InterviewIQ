@@ -3,8 +3,9 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
+import { wakeServer } from "@/lib/config";
 import GoogleButton from "./GoogleButton";
 import PasswordField from "./PasswordField";
 
@@ -16,6 +17,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(params.get("error") ? "Sign-in failed. Try again or use email and password." : null);
   const [busy, setBusy] = useState(false);
+  useEffect(() => { wakeServer(); }, []);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -29,6 +31,7 @@ export default function LoginForm() {
 
   return (
     <div className="space-y-5">
+      {params.get("registered") && <p className="ok-box">Account created. Log in to continue.</p>}
       {params.get("reset") && <p className="ok-box">Password updated. Log in with your new password.</p>}
       <GoogleButton callbackUrl={callbackUrl} />
       <div className="flex items-center gap-3 text-xs text-ink-faint"><span className="h-px flex-1 bg-line" />or log in with email<span className="h-px flex-1 bg-line" /></div>

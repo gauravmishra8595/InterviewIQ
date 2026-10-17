@@ -1,9 +1,5 @@
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ??
-  (process.env.NODE_ENV === "production"
-    ? "https://interviewiq-api-a3w5.onrender.com/api"
-    : "http://localhost:8000/api");
-
+import { API_URL } from "./config";
+export { API_URL };
 export class ApiError extends Error {
   status: number;
   data: unknown;
@@ -51,11 +47,20 @@ export async function apiFetch<T>(path: string, { token, method, body, form }: O
   try {
     res = await fetch(`${API_URL}${path}`, { method: method ?? (payload ? "POST" : "GET"), headers, body: payload, cache: "no-store" });
   } catch {
-    throw new ApiError("Cannot reach the server. Check your connection and try again.", 0, null);
+    throw new ApiError("Cannot reach the server. If it was idle it may be waking up, so wait 30 seconds and try again.", 0, null);
   }
   const text = await res.text();
   const data = text ? safeJson(text) : null;
-  if (!res.ok) throw new ApiError(errorMessage(data), res.status, data);
+  if (!res.ok) {
+    // A non-JSON body (an HTML error page) must never be shown to the user.
+    const message =
+      typeof data === "string"
+        ? res.status >= 500
+          ? "The server had a problem. Wait a moment and try again."
+          : "Something went wrong. Please try again."
+        : errorMessage(data);
+    throw new ApiError(message, res.status, data);
+  }
   return data as T;
 }
 
