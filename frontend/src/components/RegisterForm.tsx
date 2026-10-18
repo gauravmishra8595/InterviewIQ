@@ -8,7 +8,6 @@ import { apiFetch } from "@/lib/api";
 import { wakeServer } from "@/lib/config";
 import GoogleButton from "./GoogleButton";
 import PasswordField from "./PasswordField";
-
 export default function RegisterForm() {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
@@ -23,27 +22,36 @@ export default function RegisterForm() {
   }, [busy]);
   const set = (k: keyof typeof form) => (v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  async function submit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    if (form.password !== form.confirm) return setError("The two passwords do not match.");
-    setBusy(true);
-    try {
-      await apiFetch("/auth/register/", {
-        body: { name: form.name.trim(), email: form.email.trim(), password: form.password },
-      });
-      const res = await signIn("credentials", { email: form.email.trim(), password: form.password, redirect: false });
-      if (res?.error) {
-        // The account exists now, so send them to log in instead of showing an error.
-        router.push("/login?registered=1");
-        return;
-      }
-      router.push("/setup");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not create the account.");
-      setBusy(false);
-    }
+ async function submit(e: FormEvent) {
+  e.preventDefault();
+  setError(null);
+
+  if (form.password !== form.confirm) {
+    return setError("The two passwords do not match.");
   }
+
+  setBusy(true);
+
+  try {
+    await apiFetch("/auth/register/", {
+      body: {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password,
+      },
+    });
+
+    // Registration successful — redirect to login
+    router.push("/login?registered=1");
+  } catch (err) {
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Could not create the account."
+    );
+    setBusy(false);
+  }
+}
 
   return (
     <div className="space-y-5">
