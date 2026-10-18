@@ -2,7 +2,7 @@
 const PROD_FALLBACK = "https://interviewiq-api-a3w5.onrender.com/api";
 
 const raw =
-  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.API_URL ||
   (process.env.NODE_ENV === "production" ? PROD_FALLBACK : "http://localhost:8000/api");
 
 export const API_URL = raw.replace(/\/+$/, "");
